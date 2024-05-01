@@ -27,4 +27,12 @@ public class Quarto {
 		this.hospedes = hospedes;
 	}
 	
+	public void setHospedes(Hospede hospede) {
+		this.hospedes.add(hospede);
+	}
+	
+	public int getQuantidade() {
+		return this.getHospedes().size();
+	}
+	
 }

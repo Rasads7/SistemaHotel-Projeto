@@ -7,7 +7,7 @@ public class Hospede {
 	public Quarto getQuarto() {
 		return quarto;
 	}
-
+ #testando pr
 	public void setQuarto(Quarto quarto) {
 		this.quarto = quarto;
 	}

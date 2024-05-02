@@ -42,6 +42,4 @@ class TestSistema {
 		recep.aloca(quartos, hospedes);
 		
 	}
-	
-
 }

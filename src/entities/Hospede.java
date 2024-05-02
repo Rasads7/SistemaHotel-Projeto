@@ -2,7 +2,7 @@ package entities;
 
 public class Hospede extends Thread {
 
-    private Quarto quarto;
+    private Quarto quarto; //referencia o quarto que o hóspede está
 
     public Hospede() {
     }
@@ -15,7 +15,7 @@ public class Hospede extends Thread {
         this.quarto = quarto;
     }
     
-    private void saidaPasseio() {
+    private void saidaPasseio() { //método de saída do hóspede
         // saída do hóspede
         System.out.println("Hóspede " + this.getId() + " foi passear.");
         // tempo do passeio (3 segundos)

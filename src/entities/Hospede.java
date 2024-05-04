@@ -2,11 +2,19 @@ package entities;
 
 public class Hospede extends Thread {
 
-    private Quarto quarto; //referencia o quarto que o hóspede está
-
+    private Quarto quarto; 
+    private String nome;
+    
+    // Constructors
     public Hospede() {
+    	this.nome = "Anônimo";
     }
-
+    
+    public Hospede(String nome) {
+    	this.nome = nome;
+    }
+    
+    // Getters e Setters
     public Quarto getQuarto() {
         return quarto;
     }
@@ -15,10 +23,27 @@ public class Hospede extends Thread {
         this.quarto = quarto;
     }
     
-    private void saidaPasseio() { //método de saída do hóspede
-        // saída do hóspede
-        System.out.println("Hóspede " + this.getId() + " foi passear.");
-        // tempo do passeio (3 segundos)
+    public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	// Métodos 
+	public void saidaPasseio() { 
+    	/**
+    	 * Método criado para definir o comportamente do hóspede quando ele quer sair do quarto
+    	 * para passear.
+    	 * 
+    	 * Por padrão, ele ficará 3 segundos fora.
+    	 * 
+    	 * O Hóspede não poderá voltar para o quarto até que a chave esteja disponível
+    	 */
+		this.getQuarto().setPosseChave(EnumPosseChave.HOTEL);
+        System.out.println("Hóspede '" + this.getNome() + "' foi passear.");
+        
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
@@ -28,17 +53,17 @@ public class Hospede extends Thread {
 
     @Override
     public void run() {
-        // mostra o estado do hóspede
         while (true) {
             if (quarto != null) {
             	// mostra o hóspede dentro do quarto
-            	System.out.println("Hóspede " + this.getId() + " se encontra quarto: " + quarto);
+            	System.out.println("Hóspede " + this.getNome() + " se encontra quarto: " + quarto);
                 
             	//método para o passeio
             	saidaPasseio();
 
-                // mostra o retorno
-                System.out.println("Hóspede " + this.getId() + " voltou do passeio");
+            	// TODO Que retorno???
+                System.out.println("Hóspede " + this.getNome() + " voltou do passeio");
+                
                 // espera 5 segundos para poder sair de novo
                 try {
                     Thread.sleep(5000);

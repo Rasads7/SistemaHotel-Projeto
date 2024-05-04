@@ -3,13 +3,19 @@ package entities;
 import java.util.ArrayList;
 
 public class Recepcionista {
-	
-	private ArrayList<Quarto> quartos;
 
+	private ArrayList<Quarto> quartos;
+	
+	// Constructors
 	public Recepcionista() {
 		this.setQuartos(new ArrayList<Quarto>());
 	}
-
+	
+	public Recepcionista(ArrayList<Quarto> quartos) {
+		this.quartos = quartos;
+	}
+	
+	// Getters e Setters
 	public ArrayList<Quarto> getQuartos() {
 		return quartos;
 	}
@@ -17,26 +23,39 @@ public class Recepcionista {
 	public void setQuartos(ArrayList<Quarto> quartos) {
 		this.quartos = quartos;
 	}
-
-	public void aloca(Quarto quarto, Hospede hospede) {
-		hospede.setQuarto(quarto);
-		quarto.setDisponibilidade(DisponibilidadeEnum.OCUPADO);
-		quarto.setHospedes(hospede);
-	}
 	
-	public void aloca(ArrayList<Quarto> quartos, ArrayList<Hospede> hospedes) {
+	// Métodos
+	public void aloca(Hospede hospede) {
 		/**
-		 * este método foi criado para lidar com situações onde há mais do que 4 hóspedes
+		 * Este método aloca um hóspede em um dos quartos disponíveis (VAGO) presentes
+		 * na lista de quartos do recepcionista.
 		 */
-		for (Quarto quarto : quartos) {
-			for (Hospede hospede : hospedes) {
-				if (quarto.getQuantidade() < 4) {
-					quarto.setHospedes(hospede);
-					hospede.setQuarto(quarto);
-					hospedes.remove(hospede);
-				} else quarto.setDisponibilidade(DisponibilidadeEnum.OCUPADO);
+		for (Quarto quarto : this.getQuartos()) {
+			if (quarto.getDisponibilidade().equals(DisponibilidadeEnum.VAGO)) {
+				hospede.setQuarto(quarto);
+				quarto.setDisponibilidade(DisponibilidadeEnum.OCUPADO);
+				quarto.setHospedes(hospede);
+				quarto.setPosseChave(EnumPosseChave.HOSPEDE);
 			}
 		}
 	}
 
+	public void aloca(ArrayList<Hospede> hospedes) {
+		/**
+		 * este método foi criado para lidar com situações onde há mais do que 4
+		 * hóspedes
+		 */
+		
+		for (Quarto quarto : this.getQuartos()) {
+			for (Hospede hospede : hospedes) {
+				if (quarto.getQuantidade() < 4) {
+					if (hospede.getQuarto() == null) {
+						quarto.setHospedes(hospede);
+						hospede.setQuarto(quarto);
+						quarto.setPosseChave(EnumPosseChave.HOSPEDE);
+					}
+				} else quarto.setDisponibilidade(DisponibilidadeEnum.OCUPADO);
+			}
+		}
+	}
 }
